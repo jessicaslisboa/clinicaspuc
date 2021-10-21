@@ -33,9 +33,4 @@ public class AuthApi {
 		}
 	}
 
-	/*
-	 * @POST public Response criarUsuario(Usuario usuario) { Usuario p = null; try {
-	 * p = usuarioService.salvar(usuario); } catch (Exception e) { throw e; } return
-	 * Response.ok(p).build(); }
-	 */
 }

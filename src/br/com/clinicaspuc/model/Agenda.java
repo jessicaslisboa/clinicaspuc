@@ -10,11 +10,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "agenda", schema = "clinicaspuc")
+@NamedQueries( value = { @NamedQuery(name="Agenda.obterPorUsuario", 
+					query="select a from Agenda a where a.usuario.codigo = :codUsuario" ),
+		@NamedQuery(name="Agenda.obterAtivas", 
+		query="select a from Agenda a where a.disponivel = true" )})
 public class Agenda {
 	
 	@Id

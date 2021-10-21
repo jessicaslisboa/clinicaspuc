@@ -5,6 +5,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
+import br.com.clinicaspuc.model.Perfil;
 import br.com.clinicaspuc.model.Usuario;
 import br.com.clinicaspuc.repositorio.UsuarioRepositorio;
 import br.com.clinicaspuc.rs.dto.UsuarioLogin;
@@ -14,13 +15,20 @@ public class UsuarioService {
 
 	@EJB
 	private UsuarioRepositorio usuarioRepositorio;
+
 	
 	public List<Usuario> obterUsuarios() {
 		return usuarioRepositorio.consultaUsuarios();
 	}
 
 	public Usuario salvar(Usuario usuario) {
-		Usuario user = usuarioRepositorio.salvar(usuario);
+		
+		Perfil perfil = usuarioRepositorio.getPerfilPorId(usuario.getPerfil().getCodigo());
+	
+		Usuario user = usuario;
+		user.setPerfil(perfil);
+		user =  usuarioRepositorio.salvar(user);
+		
 		return user;
 	}
 	
@@ -44,6 +52,10 @@ public class UsuarioService {
 			}
 		}
 		return false;
+	}
+
+	public List<Perfil> getPerfilList() {
+		return usuarioRepositorio.getPerfis();
 	}
 	
 }	
