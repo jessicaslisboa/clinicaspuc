@@ -84,7 +84,15 @@ public class AgendaApi {
 	
 	@DELETE
 	@Path("/{codigo}")
-	public void excluir(@PathParam("codigo") Integer codigo) {
+	public Response excluir(@PathParam("codigo") Integer codigo) {
+		Agenda m = agendaService.obterPorId(codigo);
+		if (m != null) {
+			agendaService.delete(m);
+			return Response.ok().build();
+		}else {
+			//TODO Verificar status adequado
+			return Response.status(Response.Status.NOT_FOUND).build();
+		}
 		
 	}
 	

@@ -11,11 +11,11 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import br.com.clinicaspuc.model.Consulta;
+import br.com.clinicaspuc.model.Exame;
 import br.com.clinicaspuc.service.ConsultaService;
 
 @Path("/consulta")
@@ -38,11 +38,11 @@ public class ConsultaApi {
 	}
 	
 	@GET
-	@Path("{codigoPaciente}")
-	public Response getPorCodigo(@PathParam("codigo") int codigo) {
+	@Path("{codPaciente}")
+	public Response getPaciente(@PathParam("codPaciente") int codPaciente) {
 		Consulta consulta = null;
 		try {
-			consulta = consultaService.obterPorId(codigo);
+			consulta = consultaService.obterPorId(codPaciente);
 		} catch (Exception e) {
 			throw e;
 		}
@@ -54,32 +54,41 @@ public class ConsultaApi {
 	}	
 	
 	@GET
-	@Path("/pendentes")
-	public Response getPorCodigoUsuario(){
-		List<Consulta> consultas = null;
-		try {
-			consultas = consultaService.obterConsultasNaoRealizadas();
-		} catch (Exception e) {
-			throw e;
-		}
-		//TODO tratar usuario ?
-		return Response.ok(consultas).build();
-	}
-	
+	@Path("/pendentes") 
+	public Response getPorCodigoUsuario(){ 
+		List<Consulta> consultas = null; 
+		try { 
+			consultas = consultaService.obterConsultasNaoRealizadas(); 
+		} catch (Exception e) { 
+			throw e; 
+		} 
+		//TODO tratar usuario ? 
+		return Response.ok(consultas).build(); 
+	 }
+
 	
 	@GET
-	@Path("/paciente/{codPaciente}")
-	public Response getPorCodigoPaciente(@QueryParam("codPaciente") int codPaciente){
-		List<Consulta> consultas = null;
-		try {
-			consultas = consultaService.oberPorPaciente(codPaciente);
-		} catch (Exception e) {
-			throw e;
-		}
-		//TODO tratar usuario ?
-		return Response.ok(consultas).build();
-	}
+	@Path("/exames") 
+	public Response getExamesList(){ 
+		List<Exame> exames = null; 
+		try { 
+			exames = consultaService.listaExames(); 
+		} catch (Exception e) { 
+			throw e; 
+		} 
+		return Response.ok(exames).build(); 
+	 }
+
 	
+	/*
+	 * @GET
+	 * 
+	 * @Path("/paciente/{codPaciente}") public Response
+	 * getPorCodigoPaciente(@QueryParam("codPaciente") int codPaciente){
+	 * List<Consulta> consultas = null; try { consultas =
+	 * consultaService.oberPorPaciente(codPaciente); } catch (Exception e) { throw
+	 * e; } //TODO tratar usuario ? return Response.ok(consultas).build(); }
+	 */
 	@POST
 	public Response salvar(Consulta consulta) {
 		Consulta c = null;
@@ -92,14 +101,22 @@ public class ConsultaApi {
 	}
 	
 	@PUT
-	public void atualizar(Consulta consulta) {
+	@Path("{codPaciente}")
+	public void atualizar(@PathParam("codPaciente") int codigo,Consulta consulta) {
 		
 	}
 	
 	@DELETE
 	@Path("/{codigo}")
-	public void excluir(@PathParam("codigo") Integer codigo) {
-		
+	public Response excluir(@PathParam("codigo") Integer codigo) {
+		Consulta c = consultaService.obterPorId(codigo);
+		if (c != null) {
+			consultaService.delete(c);
+			return Response.ok().build();
+		}else {
+			//TODO Verificar status adequado
+			return Response.status(Response.Status.NOT_FOUND).build();
+		}
 	}
 	
 }

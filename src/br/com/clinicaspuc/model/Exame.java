@@ -13,6 +13,7 @@ public class Exame {
 	@Column(name = "codigo", unique = true, nullable = false)	
 	private Integer codigo;
 	
+	@Column(name = "nome")
 	private String nome;
 
 	public Integer getCodigo() {

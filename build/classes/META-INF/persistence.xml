@@ -9,7 +9,6 @@
 		<class>br.com.clinicaspuc.model.Consulta</class>
 		<class>br.com.clinicaspuc.model.Endereco</class>
 		<class>br.com.clinicaspuc.model.Exame</class>
-		<class>br.com.clinicaspuc.model.HistoricoClinico</class>
 		<class>br.com.clinicaspuc.model.Medicamento</class>
 		<class>br.com.clinicaspuc.model.Paciente</class>
 		<class>br.com.clinicaspuc.model.Perfil</class>

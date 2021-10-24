@@ -18,14 +18,19 @@ public class Endereco {
 	@Column(name = "codigo", unique = true, nullable = false)	
 	private Integer codigo;
 	
+	@Column(name="logradouro")
 	private String logradouro;
 	
+	@Column(name="bairro")
 	private String bairro;
 	
+	@Column(name="cidade")
 	private String cidade;
 	
+	@Column(name="uf")
 	private String uf;
 	
+	@Column(name="numero")
 	private int numero;
 
 	public Integer getCodigo() {
